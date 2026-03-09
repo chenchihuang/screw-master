@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>拔螺絲大師 (Screw Master)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Matter.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+</head>
+
+<body>
+    <div id="game-container">
+        <div id="canvas-wrapper"></div>
+        <div id="ui-layer">
+            <header class="top-bar glass">
+                <div class="level-info" id="level-btn" style="cursor: pointer;" title="選擇關卡">
+                    <span class="label">LEVEL ▾</span>
+                    <span id="level-display" class="value">1</span>
+                </div>
+                <div class="coins-info">
+                    <span class="icon">🪙</span>
+                    <span id="coins-display" class="value">0</span>
+                </div>
+                <div class="controls">
+                    <button id="hint-btn" class="btn hint">💡 提示</button>
+                    <button id="restart-btn" class="btn restart">🔄 重來</button>
+                </div>
+            </header>
+            <div class="slots-container glass">
+                <div class="slots-wrapper" id="slots-wrapper"></div>
+            </div>
+            <!-- Modals -->
+            <div id="modal-victory" class="modal hidden">
+                <div class="modal-content glass-heavy">
+                    <h2>過關！</h2>
+                    <p>太棒了，你解開了所有結構！</p>
+                    <div class="rewards"><span>+50 🪙</span></div>
+                    <button id="next-level-btn" class="btn primary">下一關 ➔</button>
+                </div>
+            </div>
+            <div id="modal-gameover" class="modal hidden">
+                <div class="modal-content glass-heavy">
+                    <h2>空間不足</h2>
+                    <p>螺絲槽已經滿了，無法再拔起螺絲...</p>
+                    <button id="retry-btn" class="btn primary">重新挑戰 🔄</button>
+                </div>
+            </div>
+
+            <!-- Level Select Modal -->
+            <div id="modal-levelselect" class="modal hidden">
+                <div class="modal-content glass-heavy" style="max-height: 80vh; overflow-y: auto; width: 90%;">
+                    <h2>選擇關卡</h2>
+                    <div id="level-grid" class="level-grid">
+                        <!-- Filled by JS -->
+                    </div>
+                    <button id="close-levels-btn" class="btn" style="margin-top: 20px;">關閉</button>
+                </div>
+            </div>
+            
+            <!-- Final Ending Modal -->
+            <div id="modal-the-end" class="modal hidden">
+                <div class="modal-content glass-heavy">
+                    <h1 style="font-size: 3rem; margin-bottom: 20px;">THE END</h1>
+                    <p>恭喜你完成所有挑戰！</p>
+                    <p>你是真正的拔螺絲大師！</p>
+                    <div class="rewards" style="margin-top: 30px;">
+                        <span>🏆 傳奇成就達成 🏆</span>
+                    </div>
+                    <button onclick="location.reload()" class="btn primary" style="margin-top: 30px;">重新開始遊戲</button>
+                </div>
+            </div>
+        </div>
+        <!-- Audio Elements -->
+        <audio id="bgm" src="67.mp3"></audio>
+        <audio id="death-sound" src="error_CDOxCYm.mp3"></audio>
+        <audio id="ending-sound" src="galaxy-meme.mp3"></audio>
+
+        <!-- Load scripts sequentially -->
+        <script src="ui.js"></script>
+        <script src="level_manager.js"></script>
+        <script src="level_generator.js"></script>
+        <script src="physics.js"></script>
+        <script src="game.js"></script>
+        <script src="main.js"></script>
+</body>
+
+</html>
