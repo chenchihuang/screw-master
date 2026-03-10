@@ -3,11 +3,11 @@ class GameState {
         this.ui = uiManager;
         this.currentLevelIndex = 0;
         this.coins = 0;
-        
+
         this.levelData = null;
         this.filledSlots = [];
         this.maxSlots = 0;
-        
+
         this.state = 'idle';
         this.maxUnlockedLevel = 0;
         this.loadProgress();
@@ -20,7 +20,7 @@ class GameState {
                 let data = JSON.parse(saved);
                 this.maxUnlockedLevel = data.maxUnlockedLevel || 0;
                 this.coins = data.coins || 0;
-            } catch(e) {}
+            } catch (e) { }
         }
     }
 
@@ -33,7 +33,7 @@ class GameState {
 
     init() {
         this.physics = new PhysicsEngine('canvas-wrapper');
-        
+
         let canvasWrapper = document.getElementById('canvas-wrapper');
         canvasWrapper.addEventListener('pointerdown', (e) => {
             if (this.state !== 'playing') return;
@@ -63,11 +63,11 @@ class GameState {
             // Generate dynamically if beyond predefined
             this.levelData = generateLevel(index);
         }
-        
+
         this.maxSlots = this.levelData.slots;
         this.filledSlots = [];
         this.state = 'playing';
-        
+
         this.ui.updateHeader(this.currentLevelIndex + 1, this.coins);
         this.ui.renderSlots(this.maxSlots, this.filledSlots);
         this.ui.hideModals();
@@ -78,7 +78,7 @@ class GameState {
     handleInteraction(x, y) {
         let screw = this.physics.getScrewAt(x, y);
         if (!screw) return;
-        
+
         // Handle special screws BEFORE adding to slots
         if (screw.data.type === 'locked') {
             // Check if it can be unlocked
@@ -107,7 +107,7 @@ class GameState {
             screw.data.hits--;
             if (screw.data.hits > 0) {
                 // Change color slightly to show it's loosening
-                screw.body.render.fillStyle = '#b45309'; 
+                screw.body.render.fillStyle = '#b45309';
                 return;
             }
             // Once broken, turns to normal for slot logic
@@ -146,26 +146,26 @@ class GameState {
             if (screw.data.type === 'color_lock') {
                 // Remove screw from physics world manually before check
                 this.physics.removeScrew(screw.data.id);
-                
+
                 // Check if any screws of the SAME color_lock type and SAME color are still there
-                let remains = Object.values(this.physics.screws).some(s => 
+                let remains = Object.values(this.physics.screws).some(s =>
                     s.data.type === 'color_lock' && s.data.colorId === screw.data.colorId
                 );
-                
+
                 if (!remains) {
                     this.colorOrderIndex = (this.colorOrderIndex || 0) + 1;
                 }
             } else {
                 this.physics.removeScrew(screw.data.id);
             }
-            
-            this.filledSlots.push({ 
-                type: screw.data.type, 
-                id: screw.data.id, 
-                colorId: screw.data.colorId || screw.data.type 
+
+            this.filledSlots.push({
+                type: screw.data.type,
+                id: screw.data.id,
+                colorId: screw.data.colorId || screw.data.type
             });
             this.ui.renderSlots(this.maxSlots, this.filledSlots);
-            
+
             this.resolveSlots();
 
             if (this.filledSlots.length >= this.maxSlots) {
@@ -209,7 +209,7 @@ class GameState {
 
             // Re-render
             this.ui.renderSlots(this.maxSlots, this.filledSlots);
-            
+
             // Give 10 coins for matching
             this.coins += 10;
             this.ui.updateHeader(this.currentLevelIndex + 1, this.coins);
@@ -229,7 +229,7 @@ class GameState {
                 // Pause BGM if playing
                 const bgm = document.getElementById('bgm');
                 if (bgm) bgm.pause();
-                
+
                 endingSound.play().catch(e => console.log("Ending sound prevented:", e));
             }
             this.ui.showTheEnd();
@@ -264,7 +264,7 @@ class GameState {
         if (this.coins >= 20) {
             this.coins -= 20;
             this.ui.updateHeader(this.currentLevelIndex + 1, this.coins);
-            alert("Hint used! Look for the most disconnected plates.");
+            alert("已使用提示！請尋找最容易脫落（連接螺絲最少）的板子。");
         }
     }
 }
