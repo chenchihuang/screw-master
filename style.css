@@ -34,8 +34,12 @@
 
 body {
     font-family: 'Outfit', sans-serif;
-    /* 背景改為透明以顯示影片 */
-    background-color: transparent;
+    /* 工地建築背景 */
+    background-image: url('construction_site_bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     color: var(--text-color);
     width: 100vw;
     height: 100vh;
