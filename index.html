@@ -12,6 +12,12 @@
 </head>
 
 <body>
+    <!-- 全螢幕影片背景 -->
+    <video autoplay loop muted playsinline
+        style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -1; pointer-events: none;">
+        <source src="F27E7235-64DA-46E9-8556-70DAE0F133A7.MP4" type="video/mp4">
+    </video>
+
     <div id="game-container">
         <div id="canvas-wrapper"></div>
         <div id="ui-layer">
@@ -59,7 +65,7 @@
                     <button id="close-levels-btn" class="btn" style="margin-top: 20px;">關閉</button>
                 </div>
             </div>
-            
+
             <!-- Final Ending Modal -->
             <div id="modal-the-end" class="modal hidden">
                 <div class="modal-content glass-heavy">

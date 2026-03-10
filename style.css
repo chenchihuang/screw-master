@@ -1,22 +1,22 @@
 :root {
     --bg-color: #1f2937;
     --text-color: #f8fafc;
-    --primary: #f97316; /* 工程橘 */
+    --primary: #f97316;
+    /* 工程橘 */
     --primary-hover: #ea580c;
-    --warning: #eab308; /* 警告黃 */
+    --warning: #eab308;
+    /* 警告黃 */
     --success: #22c55e;
     --danger: #ef4444;
     --glass-bg: rgba(31, 41, 55, 0.8);
     --glass-border: #4b5563;
     --slot-bg: rgba(0, 0, 0, 0.5);
 
-    --hazard-stripes: repeating-linear-gradient(
-        45deg,
-        #eab308,
-        #eab308 10px,
-        #000 10px,
-        #000 20px
-    );
+    --hazard-stripes: repeating-linear-gradient(45deg,
+            #eab308,
+            #eab308 10px,
+            #000 10px,
+            #000 20px);
 
     --screw-normal: #94a3b8;
     --screw-locked: #dc2626;
@@ -34,13 +34,8 @@
 
 body {
     font-family: 'Outfit', sans-serif;
-    /* 工地水泥感背景 */
-    background-color: #374151;
-    background-image: 
-        radial-gradient(#4b5563 1px, transparent 1px),
-        linear-gradient(to right, #313a48 1px, transparent 1px),
-        linear-gradient(to bottom, #313a48 1px, transparent 1px);
-    background-size: 40px 40px, 20px 20px, 20px 20px;
+    /* 背景改為透明以顯示影片 */
+    background-color: transparent;
     color: var(--text-color);
     width: 100vw;
     height: 100vh;
@@ -56,10 +51,11 @@ body {
     max-width: 500px;
     height: 100%;
     max-height: 900px;
-    background-color: #111827;
+    background-color: rgba(17, 24, 39, 0.4);
     overflow: hidden;
     box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
-    border: 4px solid #374151;
+    border: 4px solid rgba(55, 65, 81, 0.5);
+    backdrop-filter: blur(2px);
 }
 
 #canvas-wrapper {
@@ -189,7 +185,8 @@ body {
     color: white;
     font-size: 1.1rem;
     padding: 12px 24px;
-    border-radius: 8px; /* 較硬朗的圓角 */
+    border-radius: 8px;
+    /* 較硬朗的圓角 */
     margin-top: 20px;
     border: 2px solid #000;
 }
@@ -212,7 +209,8 @@ body {
 .slot {
     width: 45px;
     height: 45px;
-    border-radius: 8px; /* 方形感 */
+    border-radius: 8px;
+    /* 方形感 */
     background: var(--slot-bg);
     border: 2px solid #374151;
     box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.5);
