@@ -264,7 +264,7 @@ class GameState {
         if (this.coins >= 20) {
             this.coins -= 20;
             this.ui.updateHeader(this.currentLevelIndex + 1, this.coins);
-            alert("已使用提示！請尋找最容易脫落（連接螺絲最少）的板子。");
+            alert("試著拔除螺絲!連續三個顏色相同的螺絲可以在佇列中消去!");
         }
     }
 }
