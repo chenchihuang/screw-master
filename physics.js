@@ -192,10 +192,22 @@ class PhysicsEngine {
                 let pBody = c.bodyA;
                 if (pBody) {
                     pBody.screwCount--;
+
                     // 如果板塊上沒有螺絲了，且它有轉軸約束，則釋放轉軸
                     if (pBody.screwCount <= 0 && pBody.plugin && this.pivotConstraints[pBody.plugin.id]) {
                         Matter.World.remove(this.world, this.pivotConstraints[pBody.plugin.id]);
                         delete this.pivotConstraints[pBody.plugin.id];
+                    }
+
+                    // 【修復滑動板 BUG】
+                    // 滑動板（isSlider）被設為 isStatic，螺絲全拔後它不會掉落。
+                    // 當螺絲歸零時，解除 static 讓板子受重力下墜，才能被 checkWin() 偵測。
+                    if (pBody.screwCount <= 0 && pBody.isStatic) {
+                        Matter.Body.setStatic(pBody, false);
+                        // 同時從 sliders 陣列移除，停止往復動畫
+                        if (this.sliders) {
+                            this.sliders = this.sliders.filter(s => s.body !== pBody);
+                        }
                     }
                 }
                 Matter.World.remove(this.world, c);
